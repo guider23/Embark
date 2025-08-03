@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch Video - Embark</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="dark-theme video-page">
+    
+    <nav class="navbar video-navbar">
+        <div class="nav-content">
+            
+            <div class="nav-left">
+                <button id="back-button" class="back-button">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5M12 19l-7-7 7-7"></path>
+                    </svg>
+                    <span>Back to Feed</span>
+                </button>
+            </div>
+
+            
+            <div class="nav-center">
+                <div class="logo-container">
+                    <h1 class="logo">EMBARK</h1>
+                </div>
+            </div>
+
+            
+            <div class="nav-right">
+                <button id="theme-toggle" class="nav-button theme-toggle" aria-label="Toggle theme">
+                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+                    </svg>
+                    <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    
+    <main class="video-main">
+        
+        <div class="video-section">
+            <div class="video-header">
+                <h1 id="video-title" class="video-title">Loading video...</h1>
+                <div class="video-meta">
+                    <span id="video-duration" class="video-duration"></span>
+                    <div class="video-actions">
+                        <button id="open-youtube" class="youtube-button">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15,3 21,3 21,9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                            Open in YouTube
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="video-container">
+                <div id="video-wrapper" class="video-wrapper">
+                    <div id="mute-notification" class="mute-notification" style="display:none;"></div>
+                    <div id="video-player" class="video-player"></div>
+                    <div id="video-loading" class="video-loading">
+                        <div class="loading-spinner"></div>
+                        <p>Loading video player...</p>
+                    </div>
+                </div>
+            </div>
+            <div id="custom-controls" class="custom-controls">
+                
+            </div>
+        </div>
+    </main>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="video.js"></script>
+</body>
+</html>

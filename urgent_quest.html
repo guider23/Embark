@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urgent Quest</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .uq-content { max-width: 700px; margin: 2rem auto; font-size: 1.1rem; color: var(--text-primary); background: var(--bg-elevated); border-radius: 12px; padding: 2rem; box-shadow: var(--shadow-lg); }
+        .uq-checkbox-row { display: flex; align-items: center; gap: 0.7rem; margin-top: 2rem; }
+        .uq-submit-btn { margin-top: 1.5rem; padding: 0.7rem 2rem; background: var(--accent-primary); color: #fff; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+        .uq-submit-btn:disabled { background: var(--text-muted); cursor: not-allowed; }
+        .uq-success { color: var(--success); font-size: 1.3rem; font-weight: 700; margin-top: 2rem; text-align: center; }
+        .uq-dropdown-row { margin-top: 2rem; }
+        .uq-dropdown { padding: 0.5rem 1rem; font-size: 1rem; border-radius: 6px; border: 1px solid var(--border-primary); }
+        .uq-iframe-container { width: 100%; height: 400px; margin-bottom: 1.5rem; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+        @media (max-width: 800px) { .uq-iframe-container { height: 250px; } }
+    </style>
+</head>
+<body class="dark-theme">
+    <div class="main-container" style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <h1 style="font-size:2.5rem;font-weight:900;background:var(--gradient-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:1.5rem;">Urgent Quest</h1>
+        <div class="uq-content">
+            <div class="uq-iframe-container">
+                <iframe src="https://685c20ab96b88d764dfc0d2d--sweet-fudge-7d91f3.netlify.app/" allowfullscreen></iframe>
+            </div>
+            <div class="uq-dropdown-row">
+                <label for="uq-dropdown">Choose a topic:</label>
+                <select id="uq-dropdown" class="uq-dropdown">
+                    <option value="">Select...</option>
+                    <option value="sports">Sports</option>
+                    <option value="music">Music</option>
+                    <option value="science">Science</option>
+                    <option value="technology">Technology</option>
+                </select>
+            </div>
+            <div class="uq-checkbox-row">
+                <input type="checkbox" id="uq-checkbox">
+                <label for="uq-checkbox">I completed and I ensure that I understood everything.</label>
+            </div>
+            <button class="uq-submit-btn" id="uq-submit" disabled>Complete</button>
+            <div class="uq-success" id="uq-success" style="display:none;"></div>
+        </div>
+    </div>
+    <script>
+
+    const checkbox = document.getElementById('uq-checkbox');
+    const submitBtn = document.getElementById('uq-submit');
+    const successMsg = document.getElementById('uq-success');
+    const dropdown = document.getElementById('uq-dropdown');
+    function updateBtnState() {
+        submitBtn.disabled = !(checkbox.checked && dropdown.value);
+    }
+    checkbox.addEventListener('change', updateBtnState);
+    dropdown.addEventListener('change', updateBtnState);
+    function getNextNoonTimestamp() {
+        const now = new Date();
+        const nextNoon = new Date(now);
+        nextNoon.setHours(12, 0, 0, 0);
+        if (now >= nextNoon) {
+            nextNoon.setDate(nextNoon.getDate() + 1);
+        }
+        return nextNoon.getTime();
+    }
+    submitBtn.addEventListener('click', () => {
+        successMsg.textContent = 'Quest completed! +5 XP';
+        successMsg.style.display = 'block';
+        submitBtn.disabled = true;
+
+        const hideUntil = getNextNoonTimestamp();
+        document.cookie = `embark-urgent-quest-hide=${hideUntil}; expires=${new Date(hideUntil).toUTCString()}; path=/`;
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 2000);
+    });
+    </script>
+</body>
+</html> 
