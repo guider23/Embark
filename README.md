@@ -1,7 +1,7 @@
+> 🚧 **This project is currently under development** — more features and richer content are on the way. Thank you for your patience!
 
+### 🕊️ **Call for Contributors**
 
-### 🕊️This Project requires more contributors to stay updated on education trends - To support contact sofiyasenthilkumar@gmail.com - You are welcomed
+To keep this project updated with the latest in educational trends, we welcome more contributors!
 
-
-
-
+If you're interested in supporting or collaborating, please reach out at **[sofiyasenthilkumar@gmail.com](mailto:sofiyasenthilkumar@gmail.com)** — we'd love to have you on board.
