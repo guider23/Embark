@@ -1,8 +1,8 @@
-
-
+// Production-Ready API Configuration
+// All API keys must be provided via environment variables
 
 const getEnvVar = (name) => {
-    
+    // Check for environment variables injected at build time
     if (typeof window !== 'undefined' && window[name]) {
         return window[name];
     }
@@ -11,17 +11,17 @@ const getEnvVar = (name) => {
     return null;
 };
 
-
+// Get API configuration from environment variables only
 const SUPABASE_URL = getEnvVar('ENV_SUPABASE_URL');
 const SUPABASE_ANON_KEY = getEnvVar('ENV_SUPABASE_ANON_KEY');
 const YOUTUBE_API_KEY = getEnvVar('ENV_YOUTUBE_API_KEY');
 
-
+// Initialize Supabase only if we have valid credentials
 const supabase = (SUPABASE_URL && SUPABASE_ANON_KEY) 
     ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
     : null;
 
-
+// Log configuration status (for debugging)
 if (!supabase) {
     console.warn('Supabase not initialized - missing environment variables');
 }
@@ -443,7 +443,7 @@ function extractVideoId(url) {
 async function getVideoData(videoId) {
     if (YOUTUBE_API_KEY) {
         try {
-            const apiUrl = `https:
+            const apiUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${videoId}&key=${YOUTUBE_API_KEY}`;
             const response = await fetch(apiUrl);
             if (response.ok) {
                 const data = await response.json();
@@ -463,7 +463,7 @@ async function getVideoData(videoId) {
         }
     }
     try {
-        const response = await fetch(`https:
+        const response = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`);
         if (!response.ok) throw new Error('oEmbed fetch failed');
         const data = await response.json();
         return {
@@ -475,7 +475,7 @@ async function getVideoData(videoId) {
     } catch (e) {
         return {
             title: 'YouTube Video',
-            thumbnail: `https:
+            thumbnail: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
             duration: '',
             views: ''
         };
@@ -497,7 +497,7 @@ function parseYouTubeDuration(iso) {
 
 async function getArticleData(mediumLink, index) {
     try {
-        const oembedUrl = `https:
+        const oembedUrl = `https://medium.com/oembed?url=${encodeURIComponent(mediumLink)}`;
         const response = await fetch(oembedUrl);
         if (response.ok) {
             const data = await response.json();
@@ -561,7 +561,7 @@ function openArticleModal(title, mediumLink) {
     articleIframe.style.display = 'none';
     articleIframe.src = 'about:blank';
     setTimeout(() => {
-        const archiveUrl = `https:
+        const archiveUrl = `https://archive.is/${mediumLink}`;
         articleIframe.src = archiveUrl;
     }, 50);
     articleModal.classList.remove('hidden');
@@ -718,7 +718,7 @@ function showNotification(message, type = 'info') {
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
     
-    
+    // Get icon for notification type
     const icons = {
         info: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>',
         success: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg>',
@@ -739,7 +739,7 @@ function showNotification(message, type = 'info') {
         </button>
     `;
     
-    
+    // Enhanced styling
     Object.assign(notification.style, {
         display: 'flex',
         alignItems: 'center',
@@ -767,7 +767,7 @@ function showNotification(message, type = 'info') {
         cursor: 'pointer'
     });
 
-    
+    // Style the icon container
     const iconElement = notification.querySelector('.notification-icon');
     Object.assign(iconElement.style, {
         display: 'flex',
@@ -780,14 +780,14 @@ function showNotification(message, type = 'info') {
         flexShrink: '0'
     });
 
-    
+    // Style the content
     const contentElement = notification.querySelector('.notification-content');
     Object.assign(contentElement.style, {
         flex: '1',
         lineHeight: '1.4'
     });
 
-    
+    // Style the close button
     const closeElement = notification.querySelector('.notification-close');
     Object.assign(closeElement.style, {
         display: 'flex',
@@ -804,7 +804,7 @@ function showNotification(message, type = 'info') {
         flexShrink: '0'
     });
 
-    
+    // Add hover effects
     closeElement.addEventListener('mouseenter', () => {
         closeElement.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
         closeElement.style.transform = 'scale(1.1)';
@@ -817,17 +817,17 @@ function showNotification(message, type = 'info') {
 
     stack.appendChild(notification);
 
-    
+    // Click to dismiss
     notification.addEventListener('click', () => {
         dismissNotification(notification, stack);
     });
 
-    
+    // Animate in
     setTimeout(() => {
         notification.style.transform = 'translateX(0) scale(1)';
     }, 100);
 
-    
+    // Auto dismiss after 4 seconds
     setTimeout(() => {
         dismissNotification(notification, stack);
     }, 4000);
@@ -917,7 +917,7 @@ function showUrgentQuest() {
     }
     urgentQuestSection?.classList.remove('hidden');
     urgentQuestContent.innerHTML = '';
-    
+    // Set infinity symbol instead of running timer
     urgentQuestTimer.textContent = '∞';
 }
 

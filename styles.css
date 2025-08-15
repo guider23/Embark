@@ -1118,7 +1118,7 @@ body {
 }
 
 @media (max-width: 768px) and (min-width: 481px) {
-    
+    /* Tablet-specific video player styles */
     .nav-content {
         padding: 0 1rem;
     }
@@ -1185,9 +1185,9 @@ body {
         font-size: 0.9rem !important;
     }
     
-    
+    /* Ensure video wrapper maintains proper aspect ratio */
     .video-wrapper {
-        padding-bottom: 56.25%; 
+        padding-bottom: 56.25%; /* 16:9 aspect ratio */
         height: 0;
     }
     
@@ -1497,7 +1497,7 @@ body {
     line-height: 1.4;
 }
 
-
+/* Mobile responsive */
 @media (max-width: 768px) {
     .notification-stack {
         top: 70px;
