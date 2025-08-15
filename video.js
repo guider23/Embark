@@ -136,7 +136,7 @@ function createPlayer() {
             'modestbranding': 1,
             'rel': 0,
             'showinfo': 0,
-            'controls': 0, // Hide YouTube controls for custom experience
+            'controls': 0, 
             'disablekb': 1,
             'fs': 0,
             'iv_load_policy': 3
@@ -165,7 +165,7 @@ function onPlayerReady(event) {
     
 
     const continueData = continueWatching.find(v => v.videoId === videoId);
-    if (continueData && continueData.progress > 0.1) { // Only if more than 10% watched
+    if (continueData && continueData.progress > 0.1) { 
         duration = player.getDuration();
         const seekTime = duration * continueData.progress;
         player.seekTo(seekTime);
@@ -550,7 +550,7 @@ function toggleTheme() {
 function renderCustomControls() {
     const controls = document.getElementById('custom-controls');
     if (!controls) return;
-    const isMobile = window.innerWidth <= 768; // Changed from 480 to 768 to include tablets
+    const isMobile = window.innerWidth <= 768; 
     if (isMobile) {
       controls.innerHTML = `
         <div class="cc-mobile-row cc-mobile-row1">
@@ -880,3 +880,4 @@ window.addEventListener('resize', () => {
     renderCustomControls();
   }
 });
+
