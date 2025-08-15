@@ -1,8 +1,6 @@
-// Production-Ready API Configuration
-// All API keys must be provided via environment variables
+
 
 const getEnvVar = (name) => {
-    // Check for environment variables injected at build time
     if (typeof window !== 'undefined' && window[name]) {
         return window[name];
     }
@@ -11,17 +9,14 @@ const getEnvVar = (name) => {
     return null;
 };
 
-// Get API configuration from environment variables only
 const SUPABASE_URL = getEnvVar('ENV_SUPABASE_URL');
 const SUPABASE_ANON_KEY = getEnvVar('ENV_SUPABASE_ANON_KEY');
 const YOUTUBE_API_KEY = getEnvVar('ENV_YOUTUBE_API_KEY');
 
-// Initialize Supabase only if we have valid credentials
 const supabase = (SUPABASE_URL && SUPABASE_ANON_KEY) 
     ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
     : null;
 
-// Log configuration status (for debugging)
 if (!supabase) {
     console.warn('Supabase not initialized - missing environment variables');
 }
