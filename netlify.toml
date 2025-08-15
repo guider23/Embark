@@ -3,4 +3,4 @@
   publish = "."
   
 [build.environment]
-  SECRETS_SCAN_OMIT_PATHS = "PRODUCTION_READY.md"
+  SECRETS_SCAN_OMIT_PATHS = "PRODUCTION_READY.md,env-inject.js"
