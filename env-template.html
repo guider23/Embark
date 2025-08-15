@@ -1,15 +1,15 @@
-<!-- Environment Variables Injection Template -->
-<!-- Add this script tag to your HTML files BEFORE other scripts -->
-<!-- Replace {{VARIABLE_NAME}} with actual values during build process -->
+
+
+
 
 <script>
-// Environment variables injected at build time
-// These values will be replaced by your deployment platform
+
+
 window.ENV_SUPABASE_URL = '{{ENV_SUPABASE_URL}}';
 window.ENV_SUPABASE_ANON_KEY = '{{ENV_SUPABASE_ANON_KEY}}';
 window.ENV_YOUTUBE_API_KEY = '{{ENV_YOUTUBE_API_KEY}}';
 
-// Validate environment variables
+
 if (window.ENV_SUPABASE_URL === '{{ENV_SUPABASE_URL}}') {
     console.error('Environment variables not injected properly during build');
 }

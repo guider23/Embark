@@ -92,14 +92,14 @@ async function updateVideoTitle() {
     const videoDuration = document.getElementById('video-duration');
     if (!videoId || !videoTitle) return;
     
-    // Get API key from environment variables only
+    
     const apiKey = (typeof window !== 'undefined' && window.ENV_YOUTUBE_API_KEY) 
         ? window.ENV_YOUTUBE_API_KEY 
         : null;
     
     if (apiKey) {
         try {
-            const apiUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${apiKey}`;
+            const apiUrl = `https:
             const response = await fetch(apiUrl);
             if (response.ok) {
                 const data = await response.json();
@@ -112,7 +112,7 @@ async function updateVideoTitle() {
     }
 
     try {
-        const response = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`);
+        const response = await fetch(`https:
         if (response.ok) {
             const data = await response.json();
             videoTitle.textContent = data.title;
@@ -136,7 +136,7 @@ function createPlayer() {
             'modestbranding': 1,
             'rel': 0,
             'showinfo': 0,
-            'controls': 0, // Hide YouTube controls for custom experience
+            'controls': 0, 
             'disablekb': 1,
             'fs': 0,
             'iv_load_policy': 3
@@ -165,7 +165,7 @@ function onPlayerReady(event) {
     
 
     const continueData = continueWatching.find(v => v.videoId === videoId);
-    if (continueData && continueData.progress > 0.1) { // Only if more than 10% watched
+    if (continueData && continueData.progress > 0.1) { 
         duration = player.getDuration();
         const seekTime = duration * continueData.progress;
         player.seekTo(seekTime);
@@ -321,7 +321,7 @@ function updateContinueWatching(progress) {
         videoId: videoId,
         progress: progress,
         title: videoTitle,
-        thumbnail: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+        thumbnail: `https:
         timestamp: Date.now()
     };
     
@@ -364,7 +364,7 @@ function setupEventListeners() {
     const openYouTube = document.getElementById('open-youtube');
     if (openYouTube) {
         openYouTube.addEventListener('click', () => {
-            window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
+            window.open(`https:
         });
     }
     
@@ -439,7 +439,7 @@ function createRelatedVideoCard(videoData, videoId) {
 }
 
 async function getVideoData(videoId) {
-    const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+    const thumbnailUrl = `https:
     
     const titles = [
         'Advanced React Patterns',
@@ -550,7 +550,7 @@ function toggleTheme() {
 function renderCustomControls() {
     const controls = document.getElementById('custom-controls');
     if (!controls) return;
-    const isMobile = window.innerWidth <= 768; // Changed from 480 to 768 to include tablets
+    const isMobile = window.innerWidth <= 768; 
     if (isMobile) {
       controls.innerHTML = `
         <div class="cc-mobile-row cc-mobile-row1">
@@ -819,7 +819,7 @@ window.addEventListener('keydown', function(e) {
     if (!player) return;
     switch (e.code) {
         case 'Space':
-        case 'Spacebar': // for older browsers
+        case 'Spacebar': 
             e.preventDefault();
             const state = player.getPlayerState();
             if (state === YT.PlayerState.PLAYING) {
