@@ -1,0 +1,5 @@
+[build]
+  publish = "."
+  
+[build.environment]
+  SECRETS_SCAN_OMIT_PATHS = "PRODUCTION_READY.md"

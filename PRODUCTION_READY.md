@@ -18,9 +18,9 @@
 In your Netlify dashboard → Site Settings → Environment Variables, add:
 
 ```
-ENV_SUPABASE_URL = https://dlveprsuwfbqqshlvgig.supabase.co
-ENV_SUPABASE_ANON_KEY = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRsdmVwcnN1d2ZicXFzaGx2Z2lnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0MTE5NTksImV4cCI6MjA2NTk4Nzk1OX0.p6uFAH3mXgr18JwVXetO2oiAnYa8Gu6YVHj4_uTulJQ
-ENV_YOUTUBE_API_KEY = AIzaSyCYk-HJnkIzjp42on-u1MCVA_wgKDfv_fA
+ENV_SUPABASE_URL = your-supabase-project-url
+ENV_SUPABASE_ANON_KEY = your-supabase-anon-key
+ENV_YOUTUBE_API_KEY = your-youtube-api-key
 ```
 
 #### Step 2: Deploy
@@ -49,9 +49,9 @@ vercel --prod
 
 #### Step 1: Set Environment Variables
 ```bash
-export ENV_SUPABASE_URL="https://dlveprsuwfbqqshlvgig.supabase.co"
-export ENV_SUPABASE_ANON_KEY="your-supabase-key"
-export ENV_YOUTUBE_API_KEY="your-youtube-key"
+export ENV_SUPABASE_URL="your-supabase-project-url"
+export ENV_SUPABASE_ANON_KEY="your-supabase-anon-key"
+export ENV_YOUTUBE_API_KEY="your-youtube-api-key"
 ```
 
 #### Step 2: Build
