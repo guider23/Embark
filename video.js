@@ -92,9 +92,10 @@ async function updateVideoTitle() {
     const videoDuration = document.getElementById('video-duration');
     if (!videoId || !videoTitle) return;
     
-    // Get API key from config
-    const config = window.EmbarkConfig || { youtube: { apiKey: 'AIzaSyCYk-HJnkIzjp42on-u1MCVA_wgKDfv_fA' } };
-    const apiKey = config.youtube.apiKey;
+    // Get API key from environment variables only
+    const apiKey = (typeof window !== 'undefined' && window.ENV_YOUTUBE_API_KEY) 
+        ? window.ENV_YOUTUBE_API_KEY 
+        : null;
     
     if (apiKey) {
         try {

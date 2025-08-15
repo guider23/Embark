@@ -1,20 +1,33 @@
-// Get configuration from config.js
-const getConfig = () => window.EmbarkConfig || {
-    supabase: {
-        url: 'https://dlveprsuwfbqqshlvgig.supabase.co',
-        anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRsdmVwcnN1d2ZicXFzaGx2Z2lnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0MTE5NTksImV4cCI6MjA2NTk4Nzk1OX0.p6uFAH3mXgr18JwVXetO2oiAnYa8Gu6YVHj4_uTulJQ'
-    },
-    youtube: {
-        apiKey: 'AIzaSyCYk-HJnkIzjp42on-u1MCVA_wgKDfv_fA'
+// Production-Ready API Configuration
+// All API keys must be provided via environment variables
+
+const getEnvVar = (name) => {
+    // Check for environment variables injected at build time
+    if (typeof window !== 'undefined' && window[name]) {
+        return window[name];
     }
+    
+    console.warn(`Environment variable ${name} not found. API functionality may be limited.`);
+    return null;
 };
 
-const config = getConfig();
-const SUPABASE_URL = config.supabase.url;
-const SUPABASE_ANON_KEY = config.supabase.anonKey;
-const YOUTUBE_API_KEY = config.youtube.apiKey;
+// Get API configuration from environment variables only
+const SUPABASE_URL = getEnvVar('ENV_SUPABASE_URL');
+const SUPABASE_ANON_KEY = getEnvVar('ENV_SUPABASE_ANON_KEY');
+const YOUTUBE_API_KEY = getEnvVar('ENV_YOUTUBE_API_KEY');
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// Initialize Supabase only if we have valid credentials
+const supabase = (SUPABASE_URL && SUPABASE_ANON_KEY) 
+    ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+    : null;
+
+// Log configuration status (for debugging)
+if (!supabase) {
+    console.warn('Supabase not initialized - missing environment variables');
+}
+if (!YOUTUBE_API_KEY) {
+    console.warn('YouTube API not available - missing environment variable');
+}
 
 let allFeedData = [];
 let watchedVideos = getWatchedVideos();
