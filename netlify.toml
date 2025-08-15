@@ -1,0 +1,32 @@
+[build]
+  # Build command to replace environment variables
+  command = "chmod +x build.sh && ./build.sh"
+  
+  # Publish directory
+  publish = "."
+
+# Environment variables configuration
+[build.environment]
+  # These will be injected during build time
+  NODE_ENV = "production"
+
+# Headers for security and CORS
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+# Redirects for SPA (if needed)
+[[redirects]]
+  from = "/video"
+  to = "/video.html"
+  status = 200
+
+[[redirects]]
+  from = "/urgent-quest"
+  to = "/urgent_quest.html"
+  status = 200

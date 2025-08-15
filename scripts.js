@@ -1,6 +1,18 @@
-const SUPABASE_URL = 'https://dlveprsuwfbqqshlvgig.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRsdmVwcnN1d2ZicXFzaGx2Z2lnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0MTE5NTksImV4cCI6MjA2NTk4Nzk1OX0.p6uFAH3mXgr18JwVXetO2oiAnYa8Gu6YVHj4_uTulJQ';
-const YOUTUBE_API_KEY = 'AIzaSyCYk-HJnkIzjp42on-u1MCVA_wgKDfv_fA';
+// Get configuration from config.js
+const getConfig = () => window.EmbarkConfig || {
+    supabase: {
+        url: 'https://dlveprsuwfbqqshlvgig.supabase.co',
+        anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRsdmVwcnN1d2ZicXFzaGx2Z2lnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0MTE5NTksImV4cCI6MjA2NTk4Nzk1OX0.p6uFAH3mXgr18JwVXetO2oiAnYa8Gu6YVHj4_uTulJQ'
+    },
+    youtube: {
+        apiKey: 'AIzaSyCYk-HJnkIzjp42on-u1MCVA_wgKDfv_fA'
+    }
+};
+
+const config = getConfig();
+const SUPABASE_URL = config.supabase.url;
+const SUPABASE_ANON_KEY = config.supabase.anonKey;
+const YOUTUBE_API_KEY = config.youtube.apiKey;
 
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -165,7 +177,7 @@ function toggleTheme() {
 
 function setupEventListeners() {
     searchInput?.addEventListener('click', () => {
-        showNotification('Search feature coming soon! 🔍', 'info');
+        showNotification('Search feature coming soon!', 'info');
     });
     
     themeToggle?.addEventListener('click', toggleTheme);
@@ -175,7 +187,7 @@ function setupEventListeners() {
     });
     
     dmButton?.addEventListener('click', () => {
-        showNotification('Direct messages coming soon! 📧', 'info');
+        showNotification('Direct messages coming soon!', 'info');
     });
     
     clearContinueButton?.addEventListener('click', clearContinueWatching);
@@ -692,41 +704,132 @@ function showNotification(message, type = 'info') {
 
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
-    notification.textContent = message;
     
+    // Get icon for notification type
+    const icons = {
+        info: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>',
+        success: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg>',
+        warning: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+        error: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>'
+    };
+
+    notification.innerHTML = `
+        <div class="notification-icon">${icons[type] || icons.info}</div>
+        <div class="notification-content">
+            <div class="notification-message">${message}</div>
+        </div>
+        <button class="notification-close" onclick="this.parentElement.click()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+        </button>
+    `;
+    
+    // Enhanced styling
     Object.assign(notification.style, {
-        padding: '1rem 1.5rem',
-        borderRadius: '12px',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '12px',
+        padding: '16px 20px',
+        borderRadius: '16px',
         color: 'white',
         fontWeight: '500',
-        fontSize: '0.875rem',
-        maxWidth: '300px',
-        boxShadow: '0 10px 25px rgba(0, 0, 0, 0.2)',
+        fontSize: '14px',
+        minWidth: '320px',
+        maxWidth: '420px',
+        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.15), 0 8px 16px rgba(0, 0, 0, 0.1)',
         background: {
-            info: '#3b82f6',
-            success: '#10b981',
-            warning: '#f59e0b',
-            error: '#ef4444'
-        }[type] || '#3b82f6',
-        transform: 'translateX(100%)',
-        transition: 'transform 0.3s ease',
+            info: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            success: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
+            warning: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+            error: 'linear-gradient(135deg, #ff5f6d 0%, #ffc371 100%)'
+        }[type] || 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        transform: 'translateX(100%) scale(0.8)',
+        transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
         position: 'relative',
         zIndex: '10001',
+        backdropFilter: 'blur(10px)',
+        border: '1px solid rgba(255, 255, 255, 0.1)',
+        cursor: 'pointer'
+    });
+
+    // Style the icon container
+    const iconElement = notification.querySelector('.notification-icon');
+    Object.assign(iconElement.style, {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '32px',
+        height: '32px',
+        borderRadius: '50%',
+        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+        flexShrink: '0'
+    });
+
+    // Style the content
+    const contentElement = notification.querySelector('.notification-content');
+    Object.assign(contentElement.style, {
+        flex: '1',
+        lineHeight: '1.4'
+    });
+
+    // Style the close button
+    const closeElement = notification.querySelector('.notification-close');
+    Object.assign(closeElement.style, {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '24px',
+        height: '24px',
+        borderRadius: '50%',
+        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+        border: 'none',
+        color: 'white',
+        cursor: 'pointer',
+        transition: 'all 0.2s ease',
+        flexShrink: '0'
+    });
+
+    // Add hover effects
+    closeElement.addEventListener('mouseenter', () => {
+        closeElement.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+        closeElement.style.transform = 'scale(1.1)';
+    });
+    
+    closeElement.addEventListener('mouseleave', () => {
+        closeElement.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+        closeElement.style.transform = 'scale(1)';
     });
 
     stack.appendChild(notification);
 
+    // Click to dismiss
+    notification.addEventListener('click', () => {
+        dismissNotification(notification, stack);
+    });
+
+    // Animate in
     setTimeout(() => {
-        notification.style.transform = 'translateX(0)';
+        notification.style.transform = 'translateX(0) scale(1)';
     }, 100);
 
+    // Auto dismiss after 4 seconds
     setTimeout(() => {
-        notification.style.transform = 'translateX(100%)';
-        setTimeout(() => {
-            if (notification.parentNode) notification.parentNode.removeChild(notification);
-            if (stack.childElementCount === 0 && stack.parentNode) stack.parentNode.removeChild(stack);
-        }, 300);
-    }, 3000);
+        dismissNotification(notification, stack);
+    }, 4000);
+}
+
+function dismissNotification(notification, stack) {
+    if (!notification || !notification.parentNode) return;
+    
+    notification.style.transform = 'translateX(100%) scale(0.8)';
+    notification.style.opacity = '0';
+    
+    setTimeout(() => {
+        if (notification.parentNode) notification.parentNode.removeChild(notification);
+        if (stack.childElementCount === 0 && stack.parentNode) stack.parentNode.removeChild(stack);
+    }, 400);
 }
 
 function setupFullscreenArticle() {
@@ -797,18 +900,12 @@ function isUrgentQuestHidden() {
 function showUrgentQuest() {
     if (isUrgentQuestHidden() || !urgentQuest) {
         urgentQuestSection?.classList.add('hidden');
-        if (window.urgentQuestTimerInterval) {
-            clearInterval(window.urgentQuestTimerInterval);
-            window.urgentQuestTimerInterval = null;
-        }
         return;
     }
     urgentQuestSection?.classList.remove('hidden');
     urgentQuestContent.innerHTML = '';
-    updateUrgentQuestTimer();
-    if (!window.urgentQuestTimerInterval) {
-        window.urgentQuestTimerInterval = setInterval(updateUrgentQuestTimer, 1000);
-    }
+    // Set infinity symbol instead of running timer
+    urgentQuestTimer.textContent = '∞';
 }
 
 function updateUrgentQuestTimer() {
@@ -863,24 +960,8 @@ function setupUrgentQuestAccept() {
     const btn = document.getElementById('urgent-quest-accept');
     if (!btn) return;
     btn.onclick = (e) => {
-        if (btn.disabled || isUrgentQuestHidden()) {
-            e.preventDefault();
-            showNotification('You cannot attend the urgent quest now. Try again later.', 'warning');
-            return;
-        }
-        ensureUrgentQuestModal();
-        const modal = document.getElementById('urgent-quest-modal');
-        const checkbox = document.getElementById('uq-modal-checkbox');
-        const startBtn = document.getElementById('uq-modal-start');
-        checkbox.checked = false;
-        startBtn.disabled = true;
-        checkbox.onchange = () => {
-            startBtn.disabled = !checkbox.checked;
-        };
-        startBtn.onclick = () => {
-            modal.remove();
-            window.location.href = 'https://bcworks.in.net/urgent_quest';
-        };
+        e.preventDefault();
+        showNotification('Level not unlocked yet', 'warning');
     };
 }
 
@@ -892,5 +973,6 @@ window.EmbarkApp = {
     saveContinueWatching,
     toggleTheme,
     initializeTheme,
-    showNotification
+    showNotification,
+    dismissNotification
 };

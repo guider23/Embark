@@ -1117,6 +1117,89 @@ body {
     }
 }
 
+@media (max-width: 768px) and (min-width: 481px) {
+    /* Tablet-specific video player styles */
+    .nav-content {
+        padding: 0 1rem;
+    }
+    
+    .nav-center {
+        margin: 0 1rem;
+    }
+    
+    .main-content,
+    .video-main {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .custom-controls {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        justify-content: center !important;
+        gap: 0.2rem !important;
+        padding: 0.15rem 0.05rem !important;
+        max-width: 99vw !important;
+        width: 100% !important;
+        margin: 0 auto 0.3rem auto !important;
+        font-size: 0.9rem !important;
+        background: var(--bg-elevated);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .cc-mobile-row {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 0.1rem;
+    }
+    .cc-mobile-row1 {
+        justify-content: center;
+    }
+    .cc-mobile-row2 {
+        flex-direction: row;
+        gap: 0.2rem;
+    }
+    .cc-mobile-row2 .time {
+        min-width: 36px !important;
+        font-size: 0.9rem !important;
+        text-align: center !important;
+        margin: 0 0.15rem !important;
+    }
+    .cc-mobile-row2 .seek-bar {
+        flex: 1 1 0;
+        margin: 0 0.15rem !important;
+        height: 10px !important;
+        min-width: 0 !important;
+        max-width: 100vw !important;
+    }
+    .cc-mobile-row3 {
+        flex-direction: row;
+        gap: 0.25rem;
+        justify-content: space-between;
+    }
+    .cc-mobile-btn {
+        min-width: 36px !important;
+        width: 36px !important;
+        height: 36px !important;
+        font-size: 0.9rem !important;
+    }
+    
+    /* Ensure video wrapper maintains proper aspect ratio */
+    .video-wrapper {
+        padding-bottom: 56.25%; /* 16:9 aspect ratio */
+        height: 0;
+    }
+    
+    .progress-bar {
+        height: 10px;
+        border-radius: 5px;
+    }
+    .progress-fill {
+        border-radius: 5px;
+    }
+}
+
 @media (max-width: 768px) {
     .nav-content {
         padding: 0 1rem;
@@ -1374,18 +1457,60 @@ body {
 
 .notification-stack {
     position: fixed;
-    top: 100px;
-    right: 2rem;
+    top: 80px;
+    right: 20px;
     z-index: 10000;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 0.75rem;
+    gap: 12px;
     pointer-events: none;
+    max-width: 420px;
 }
 
 .notification {
     pointer-events: auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.notification::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+    opacity: 0.9;
+    z-index: -1;
+}
+
+.notification:hover {
+    transform: translateX(-4px) scale(1.02) !important;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2), 0 12px 24px rgba(0, 0, 0, 0.15) !important;
+}
+
+.notification-message {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .notification-stack {
+        top: 70px;
+        right: 16px;
+        left: 16px;
+        align-items: stretch;
+        max-width: none;
+    }
+    
+    .notification {
+        min-width: auto;
+        max-width: none;
+    }
 }
 
 .modal-container.fullscreen {

@@ -91,7 +91,11 @@ async function updateVideoTitle() {
     const videoTitle = document.getElementById('video-title');
     const videoDuration = document.getElementById('video-duration');
     if (!videoId || !videoTitle) return;
-    const apiKey = 'AIzaSyCYk-HJnkIzjp42on-u1MCVA_wgKDfv_fA';
+    
+    // Get API key from config
+    const config = window.EmbarkConfig || { youtube: { apiKey: 'AIzaSyCYk-HJnkIzjp42on-u1MCVA_wgKDfv_fA' } };
+    const apiKey = config.youtube.apiKey;
+    
     if (apiKey) {
         try {
             const apiUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${apiKey}`;
@@ -545,7 +549,7 @@ function toggleTheme() {
 function renderCustomControls() {
     const controls = document.getElementById('custom-controls');
     if (!controls) return;
-    const isMobile = window.innerWidth <= 480;
+    const isMobile = window.innerWidth <= 768; // Changed from 480 to 768 to include tablets
     if (isMobile) {
       controls.innerHTML = `
         <div class="cc-mobile-row cc-mobile-row1">
