@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Environment Variables Test</title>
+</head>
+<body>
+    <h1>Environment Variables Test</h1>
+    <div id="test-results"></div>
+    
+    <script>
+        // This script will run after env-inject.js is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            const results = document.getElementById('test-results');
+            
+            const envVars = {
+                'ENV_SUPABASE_URL': window.ENV_SUPABASE_URL,
+                'ENV_SUPABASE_ANON_KEY': window.ENV_SUPABASE_ANON_KEY,
+                'ENV_YOUTUBE_API_KEY': window.ENV_YOUTUBE_API_KEY
+            };
+            
+            let html = '<h2>Environment Variables Status:</h2><ul>';
+            
+            for (const [key, value] of Object.entries(envVars)) {
+                const status = value ? '✅ Set' : '❌ Missing';
+                const displayValue = value ? (value.substring(0, 20) + '...') : 'undefined';
+                html += `<li><strong>${key}:</strong> ${status} (${displayValue})</li>`;
+            }
+            
+            html += '</ul>';
+            results.innerHTML = html;
+            
+            // Also log to console for debugging
+            console.log('Environment Variables:', envVars);
+        });
+    </script>
+</body>
+</html>

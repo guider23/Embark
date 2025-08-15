@@ -1,4 +1,5 @@
 [build]
+  command = "chmod +x build-production.sh && ./build-production.sh"
   publish = "."
   
 [build.environment]
